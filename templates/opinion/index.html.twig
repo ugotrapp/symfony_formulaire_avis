@@ -41,13 +41,13 @@
                 <td>
                 {% if is_granted('ROLE_ADMIN') %}{% if opinions.active == 1 %}<form method="post" action="{{ path('hide_content', {'id': opinions.id}) }}">
     <input type="hidden" name="_token" value="{{ csrf_token('hide_content' ~ opinions.id) }}">
-    <button class="btn" class="btn btn-primary">masquer</button>
+    <button type="btn   " class="btn btn-danger">masquer</button>
 </form> {% endif %} {% endif %}</td>
 
 <td>
                 {% if is_granted('ROLE_ADMIN') %} {% if opinions.active == 0 %}<form method="post" action="{{ path('display_content', {'id': opinions.id}) }}">
     <input type="hidden" name="_token" value="{{ csrf_token('display_content' ~ opinions.id) }}">
-    <button class="btn">afficher</button>
+    <button type="btn" class="btn btn-success">afficher</button>
 </form> {% endif %} {% endif %}</td>
             </tr>
         {% else %}

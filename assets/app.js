@@ -10,5 +10,4 @@ import './styles/app.css';
 
 // start the Stimulus application
 import './bootstrap';
-
-require('vendors/twbs/bootstrap/scss');
+import "bootswatch/dist/sketchy/bootstrap.min.css";
