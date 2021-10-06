@@ -3,27 +3,26 @@
 {% block title %}{% endblock %}
 
 {% block body %}
-    <h1>Avis clients</h1>
+    <h1 class="text-success">Avis clients</h1>
     
-    <table class="table">
+   <table class="table table-hover">
         <thead>
             <tr>
-                <th>Id</th>
-                <th>Nom</th>
-                <th>Email</th>
-                <th>Contenu</th>
-                <th>Note</th>
-                <th>Date_de_creation</th>
+               
+                <th scope="col">Nom</th>
+                <th scope="col">Email</th>
+                <th scope="col">Commentaire</th>
+                <th scope="col">Note</th>
+                <th scope="col">date de création</th>
                 {% if is_granted ('ROLE_ADMIN') %}
-                <th>actions</th>
+                <th scope="col">actions</th>
                 {% endif %}
 
             </tr>
         </thead>
         <tbody>
         {% for opinions in opinion %}
-            <tr>
-                <td>{{ opinions.id }}</td>
+            <tr class="table-active">   
                 <td>{{ opinions.nom }}</td>
                 <td>{{ opinions.email }}</td>
                 <td>{% if opinions.active == 1 %}
@@ -34,14 +33,14 @@
                 
                 <td>
                 {% if is_granted('ROLE_ADMIN') %}
-                    <a href="{{ path('opinion_show', {'id': opinions.id}) }}">détails</a>
-                    <a href="{{ path('opinion_edit', {'id': opinions.id}) }}">modifier</a>
+                    <button type="btn" class="btn btn-info" ><a href="{{ path('opinion_show', {'id': opinions.id}) }}">détails</button>
+                    <button type="btn" class="btn btn-info" ><a href="{{ path('opinion_edit', {'id': opinions.id}) }}">modifier</button>
                 {% endif %}
                 </td>
                 <td>
                 {% if is_granted('ROLE_ADMIN') %}{% if opinions.active == 1 %}<form method="post" action="{{ path('hide_content', {'id': opinions.id}) }}">
     <input type="hidden" name="_token" value="{{ csrf_token('hide_content' ~ opinions.id) }}">
-    <button type="btn   " class="btn btn-danger">masquer</button>
+    <button type="btn" class="btn btn-danger">masquer</button>
 </form> {% endif %} {% endif %}</td>
 
 <td>
@@ -58,5 +57,5 @@
         </tbody>
     </table>
 
-    <a href="{{ path('opinion_new') }}">Ajouter un avis</a>
+    <button type="btn" class="btn btn-success" ><a href="{{ path('opinion_new') }}">Ajouter un avis</button>
 {% endblock %}
