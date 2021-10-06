@@ -2,13 +2,13 @@
 
 namespace App\Entity;
 
-use App\Repository\AvisRepository;
+use App\Repository\OpinionRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass=AvisRepository::class)
+ * @ORM\Entity(repositoryClass=OpinionRepository::class)
  */
-class Avis
+class Opinion
 {
     /**
      * @ORM\Id

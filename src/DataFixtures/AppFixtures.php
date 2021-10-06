@@ -5,7 +5,7 @@ namespace App\DataFixtures;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 use App\Entity\User;
-use App\Entity\Avis;
+use App\Entity\Opinion;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Faker\Factory as FakerFactory;
 
@@ -41,14 +41,14 @@ class AppFixtures extends Fixture
 
         for ($i = 1; $i < 20; $i++) {
 
-        $avis = new Avis();
-        $avis->setNom($this->faker->name());
-        $avis->setEmail($this->faker->email());
-        $avis->setContenu($this->faker->words(5, true));
-        $avis->setNote($this->faker->randomDigitNot(4));
-        $avis->setDateDeCreation($this->faker->dateTime());
-        $avis->setActive(1);
-        $manager->persist($avis);
+        $opinion = new Opinion();
+        $opinion->setNom($this->faker->name());
+        $opinion->setEmail($this->faker->email());
+        $opinion->setContenu($this->faker->words(5, true));
+        $opinion->setNote($this->faker->randomDigitNot(4));
+        $opinion->setDateDeCreation($this->faker->dateTime());
+        $opinion->setActive(1);
+        $manager->persist($opinion);
         $manager->flush();
         }
     }

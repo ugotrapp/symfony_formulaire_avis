@@ -9,34 +9,34 @@
         <tbody>
             <tr>
                 <th>Id</th>
-                <td>{{ avis.id }}</td>
+                <td>{{ opinion.id }}</td>
             </tr>
             <tr>
                 <th>Nom</th>
-                <td>{{ avis.nom }}</td>
+                <td>{{ opinion.nom }}</td>
             </tr>
             <tr>
                 <th>Email</th>
-                <td>{{ avis.email }}</td>
+                <td>{{ opinion.email }}</td>
             </tr>
             <tr>
                 <th>Contenu</th>
-                <td>{{ avis.contenu }}</td>
+                <td>{{ opinion.contenu }}</td>
             </tr>
             <tr>
                 <th>Note</th>
-                <td>{{ avis.note }}</td>
+                <td>{{ opinion.note }}</td>
             </tr>
             <tr>
                 <th>Date_de_creation</th>
-                <td>{{ avis.dateDeCreation ? avis.dateDeCreation|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ opinion.dateDeCreation ? opinion.dateDeCreation|date('Y-m-d H:i:s') : '' }}</td>
             </tr>
         </tbody>
     </table>
 
-    <a href="{{ path('avis_index') }}">back to list</a>
+    <a href="{{ path('opinion_index') }}">back to list</a>
 
-    <a href="{{ path('avis_edit', {'id': avis.id}) }}">edit</a>
+    <a href="{{ path('opinion_edit', {'id': opinion.id}) }}">edit</a>
 
-    {{ include('avis/_delete_form.html.twig') }}
+    {{ include("opinion/_delete_form.html.twig") }}
 {% endblock %}

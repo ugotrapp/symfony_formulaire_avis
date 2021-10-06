@@ -99,10 +99,10 @@ class FormulaireAuthenticator extends AbstractFormLoginAuthenticator implements 
             $user = $token->getUser();
     
             if (in_array('ROLE_ADMIN', $user->getRoles())) {
-                $url = $this->urlGenerator->generate('avis_index');
+                $url = $this->urlGenerator->generate('opinion_index');
 
             } elseif (in_array('ROLE_MEMBER', $user->getRoles())) {
-                $url = $this->urlGenerator->generate('avis_index');
+                $url = $this->urlGenerator->generate('opinion_index');
             
             } else {
                 throw new \Exception("Votre rôle n'est pas reconnu");

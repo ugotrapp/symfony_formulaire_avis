@@ -1,0 +1,62 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{% endblock %}
+
+{% block body %}
+    <h1>Avis clients</h1>
+    
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nom</th>
+                <th>Email</th>
+                <th>Contenu</th>
+                <th>Note</th>
+                <th>Date_de_creation</th>
+                {% if is_granted ('ROLE_ADMIN') %}
+                <th>actions</th>
+                {% endif %}
+
+            </tr>
+        </thead>
+        <tbody>
+        {% for opinions in opinion %}
+            <tr>
+                <td>{{ opinions.id }}</td>
+                <td>{{ opinions.nom }}</td>
+                <td>{{ opinions.email }}</td>
+                <td>{% if opinions.active == 1 %}
+                        {{ opinions.contenu }} {% endif %}</td>
+                
+                <td>{{ opinions.note }}</td>
+                <td>{{ opinions.dateDeCreation ? opinions.dateDeCreation|date('Y-m-d H:i:s') : '' }}</td>
+                
+                <td>
+                {% if is_granted('ROLE_ADMIN') %}
+                    <a href="{{ path('opinion_show', {'id': opinions.id}) }}">détails</a>
+                    <a href="{{ path('opinion_edit', {'id': opinions.id}) }}">modifier</a>
+                {% endif %}
+                </td>
+                <td>
+                {% if is_granted('ROLE_ADMIN') %}{% if opinions.active == 1 %}<form method="post" action="{{ path('hide_content', {'id': opinions.id}) }}">
+    <input type="hidden" name="_token" value="{{ csrf_token('hide_content' ~ opinions.id) }}">
+    <button class="btn" class="btn btn-primary">masquer</button>
+</form> {% endif %} {% endif %}</td>
+
+<td>
+                {% if is_granted('ROLE_ADMIN') %} {% if opinions.active == 0 %}<form method="post" action="{{ path('display_content', {'id': opinions.id}) }}">
+    <input type="hidden" name="_token" value="{{ csrf_token('display_content' ~ opinions.id) }}">
+    <button class="btn">afficher</button>
+</form> {% endif %} {% endif %}</td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="7">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('opinion_new') }}">Ajouter un avis</a>
+{% endblock %}
