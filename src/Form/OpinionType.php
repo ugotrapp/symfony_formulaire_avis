@@ -27,10 +27,10 @@ class OpinionType extends AbstractType
             ->add('contenu', TextareaType::class, [
                 'attr' => ['class' => 'form','placeholder' => 'Donner votre avis'],
             ])
-            ->add('date_de_creation', DateType::class, [
-                'widget' => 'single_text',
-                'attr' => ['class' => 'form'],
-            ])
+            // ->add('date_de_creation', DateType::class, [
+            //     'widget' => 'single_text',
+            //     'attr' => ['class' => 'form'],
+            // ])
             ->add('note', ChoiceType::class, [
                 'choices'  => [
                     '1' => 1,
@@ -42,7 +42,7 @@ class OpinionType extends AbstractType
                 'expanded' => true,
                 'attr' => ['class' => 'radio']])
             
-            ->add('active');
+            ;
             
     }
 

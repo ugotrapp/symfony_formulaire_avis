@@ -4,15 +4,25 @@
 {% form_theme form 'bootstrap_4_layout.html.twig' %}
 
 {% block body %}
+
 {% if is_granted('ROLE_MEMBER') %}
 <h1>Votre avis nous intéresse</h1>
+<div class="formulaire">
 {{ form_start(form) }}
     {{ form_widget(form) }}
     <button class="btn btn-success">Poster</button>
 {{ form_end(form) }}
+</div>
 {% endif %}
+
+<div class='filter'>
+<button type="btn" class="btn btn-info" >Trier par date</button>
+<button type="btn" class="btn btn-info" >Trier par note</button>
+</div>
+
 <div class="container">
 <div class="row">
+
 {% for opinions in opinion %}
 <div class="col-sm-4">
 <div class="card border-info mb-5" style="max-width: 20rem;">
@@ -20,8 +30,10 @@
         <div class="card-body">
             {% if opinions.active == 1 %}
                 <p class="card-text">{{opinions.contenu}}</p>
-                <p class="card-text">Note : {{opinions.note}}/5</p>
-            {% endif %}
+                {% endif %}
+                {{ include('opinion/_notes.html.twig') }}
+                <p class="card-text">Date de publication : {{opinions.dateDeCreation | date("m/d/Y")}}</p>
+            
         <div id="button">
             {% if is_granted('ROLE_ADMIN') %}
                     <button type="btn" class="btn btn-info" ><a href="{{ path('opinion_edit', {'id': opinions.id}) }}">modifier</a></button>
@@ -50,3 +62,5 @@
     </div>
 </div>
 {% endblock %}
+
+

@@ -11,7 +11,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Route("/avis")
+ * @Route("/opinion")
  */
 class OpinionController extends AbstractController
 {
@@ -21,6 +21,8 @@ class OpinionController extends AbstractController
     public function index(OpinionRepository $opinionRepository, Request $request): Response
     {
         $opinion = new Opinion();
+        $opinion->setDateDeCreation(new \DateTime('now'));
+        $opinion->setActive(1);
         $form = $this->createForm(OpinionType::class, $opinion);
         $form->handleRequest($request);
 
@@ -34,7 +36,7 @@ class OpinionController extends AbstractController
 
 
         return $this->render('opinion/index.html.twig', [
-            'opinion' => $opinionRepository->findByNote(),
+            'opinion' => $opinionRepository->findByDate(),
             'form' => $form->createView(),
         ]);
     }
@@ -137,4 +139,6 @@ class OpinionController extends AbstractController
 
         return $this->redirectToRoute('opinion_index', [], Response::HTTP_SEE_OTHER);
     }
+
+  
 }
