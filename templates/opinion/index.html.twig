@@ -1,61 +1,52 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}{% endblock %}
+{% form_theme form 'bootstrap_4_layout.html.twig' %}
 
 {% block body %}
-    <h1 class="text-success">Avis clients</h1>
-    
-   <table class="table table-hover">
-        <thead>
-            <tr>
-               
-                <th scope="col">Nom</th>
-                <th scope="col">Email</th>
-                <th scope="col">Commentaire</th>
-                <th scope="col">Note</th>
-                <th scope="col">date de création</th>
-                {% if is_granted ('ROLE_ADMIN') %}
-                <th scope="col">actions</th>
+{% if is_granted('ROLE_MEMBER') %}
+<h1>Votre avis nous intéresse</h1>
+{{ form_start(form) }}
+    {{ form_widget(form) }}
+    <button class="btn btn-success">Poster</button>
+{{ form_end(form) }}
+{% endif %}
+<div class="container">
+<div class="row">
+{% for opinions in opinion %}
+<div class="col-sm-4">
+<div class="card border-info mb-5" style="max-width: 20rem;">
+  <div class="card-header">{{opinions.nom}}</div>
+        <div class="card-body">
+            {% if opinions.active == 1 %}
+                <p class="card-text">{{opinions.contenu}}</p>
+                <p class="card-text">Note : {{opinions.note}}/5</p>
+            {% endif %}
+        <div id="button">
+            {% if is_granted('ROLE_ADMIN') %}
+                    <button type="btn" class="btn btn-info" ><a href="{{ path('opinion_edit', {'id': opinions.id}) }}">modifier</a></button>
+                    <button type="btn" class="btn btn-success" ><a href="{{ path('opinion_show', {'id': opinions.id}) }}">détails</a></button>
                 {% endif %}
 
-            </tr>
-        </thead>
-        <tbody>
-        {% for opinions in opinion %}
-            <tr class="table-active">   
-                <td>{{ opinions.nom }}</td>
-                <td>{{ opinions.email }}</td>
-                <td>{% if opinions.active == 1 %}
-                        {{ opinions.contenu }} {% endif %}</td>
-                
-                <td>{{ opinions.note }}</td>
-                <td>{{ opinions.dateDeCreation ? opinions.dateDeCreation|date('Y-m-d H:i:s') : '' }}</td>
-                
-                <td>
-                {% if is_granted('ROLE_ADMIN') %}
-                    <button type="btn" class="btn btn-info" ><a href="{{ path('opinion_show', {'id': opinions.id}) }}">détails</button>
-                    <button type="btn" class="btn btn-info" ><a href="{{ path('opinion_edit', {'id': opinions.id}) }}">modifier</button>
+            {% if is_granted('ROLE_ADMIN') %}{% if opinions.active == 1 %}<form method="post" action="{{ path('hide_content', {'id': opinions.id}) }}">
+                <input type="hidden" name="_token" value="{{ csrf_token('hide_content' ~ opinions.id) }}">
+                <button type="btn" class="btn btn-danger">masquer</button>
+                </form>
+            {% endif %}
                 {% endif %}
-                </td>
-                <td>
-                {% if is_granted('ROLE_ADMIN') %}{% if opinions.active == 1 %}<form method="post" action="{{ path('hide_content', {'id': opinions.id}) }}">
-    <input type="hidden" name="_token" value="{{ csrf_token('hide_content' ~ opinions.id) }}">
-    <button type="btn" class="btn btn-danger">masquer</button>
-</form> {% endif %} {% endif %}</td>
+            {% if is_granted('ROLE_ADMIN') %} {% if opinions.active == 0 %}<form method="post" action="{{ path('display_content', {'id': opinions.id}) }}">
+                <input type="hidden" name="_token" value="{{ csrf_token('display_content' ~ opinions.id) }}">
+                <button type="btn" class="btn btn-success">afficher</button>
+                </form> 
+            {% endif %} 
+            {% endif %}
+        </div>
+  </div>
+</div>
+</div>
 
-<td>
-                {% if is_granted('ROLE_ADMIN') %} {% if opinions.active == 0 %}<form method="post" action="{{ path('display_content', {'id': opinions.id}) }}">
-    <input type="hidden" name="_token" value="{{ csrf_token('display_content' ~ opinions.id) }}">
-    <button type="btn" class="btn btn-success">afficher</button>
-</form> {% endif %} {% endif %}</td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="7">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-
-    <button type="btn" class="btn btn-success" ><a href="{{ path('opinion_new') }}">Ajouter un avis</button>
+    {% endfor %}
+    </div>
+    </div>
+</div>
 {% endblock %}

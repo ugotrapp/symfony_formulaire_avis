@@ -16,14 +16,26 @@ use Symfony\Component\Routing\Annotation\Route;
 class OpinionController extends AbstractController
 {
     /**
-     * @Route("/", name="opinion_index", methods={"GET"})
+     * @Route("/", name="opinion_index", methods={"GET","POST"})
      */
-    public function index(OpinionRepository $opinionRepository): Response
+    public function index(OpinionRepository $opinionRepository, Request $request): Response
     {
+        $opinion = new Opinion();
+        $form = $this->createForm(OpinionType::class, $opinion);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($opinion);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('opinion_index', [], Response::HTTP_SEE_OTHER);
+        }
 
 
         return $this->render('opinion/index.html.twig', [
             'opinion' => $opinionRepository->findByNote(),
+            'form' => $form->createView(),
         ]);
     }
 

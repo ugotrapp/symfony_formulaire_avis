@@ -44,8 +44,8 @@ class AppFixtures extends Fixture
         $opinion = new Opinion();
         $opinion->setNom($this->faker->name());
         $opinion->setEmail($this->faker->email());
-        $opinion->setContenu($this->faker->words(5, true));
-        $opinion->setNote($this->faker->randomDigitNot(4));
+        $opinion->setContenu($this->faker->words(15, true));
+        $opinion->setNote($this->faker->numberBetween(1, 5));
         $opinion->setDateDeCreation($this->faker->dateTime());
         $opinion->setActive(1);
         $manager->persist($opinion);
