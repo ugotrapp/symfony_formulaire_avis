@@ -11,7 +11,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Route("/opinion")
+ * @Route("/avis")
  */
 class OpinionController extends AbstractController
 {
@@ -52,14 +52,82 @@ class OpinionController extends AbstractController
     }
 
     /**
-     * @Route("/one_star", name="opinion_one_star", methods={"GET","POST"})
+     * @Route("/tri_par_date", name="opinion_sort_by_date", methods={"GET","POST"})
+     */
+    public function sortByDate(Request $request, OpinionRepository $opinionRepository)
+    {
+        return $this->render('opinion/sortBy.html.twig', [
+            'opinion' => $opinionRepository->findByDate(),
+        ]);
+    }
+
+    /**
+     * @Route("/tri_par_note", name="opinion_sort_by_note", methods={"GET","POST"})
+     */
+    public function sortByNote(Request $request, OpinionRepository $opinionRepository)
+    {
+        return $this->render('opinion/sortBy.html.twig', [
+            'opinion' => $opinionRepository->findByNote(),
+        ]);
+    }
+
+    /**
+     * @Route("/notes_une_etoile", name="opinion_one_star", methods={"GET","POST"})
      */
     public function oneStar(Request $request, OpinionRepository $opinionRepository): Response
     {
-        // $opinion = new Opinion();
+        
         $opinion =$opinionRepository->getRatingStars(1);
 
-        return $this->render('opinion/oneStar.html.twig', [
+        return $this->render('opinion/opinionStar.html.twig', [
+            'opinion' => $opinion
+            ]);
+    }
+
+    /**
+     * @Route("/notes_deux_etoiles", name="opinion_two_star", methods={"GET","POST"})
+     */
+    public function twoStar(Request $request, OpinionRepository $opinionRepository): Response
+    {
+        $opinion =$opinionRepository->getRatingStars(2);
+
+        return $this->render('opinion/opinionStar.html.twig', [
+            'opinion' => $opinion
+            ]);
+    }
+
+    /**
+     * @Route("/notes_trois_etoiles", name="opinion_three_star", methods={"GET","POST"})
+     */
+    public function threeStar(Request $request, OpinionRepository $opinionRepository): Response
+    {
+        $opinion =$opinionRepository->getRatingStars(3);
+
+        return $this->render('opinion/opinionStar.html.twig', [
+            'opinion' => $opinion
+            ]);
+    }
+
+    /**
+     * @Route("/notes_quatre_etoiles", name="opinion_four_star", methods={"GET","POST"})
+     */
+    public function fourStar(Request $request, OpinionRepository $opinionRepository): Response
+    {
+        $opinion =$opinionRepository->getRatingStars(4);
+
+        return $this->render('opinion/opinionStar.html.twig', [
+            'opinion' => $opinion
+            ]);
+    }
+
+    /**
+     * @Route("/notes_cinq_etoiles", name="opinion_five_star", methods={"GET","POST"})
+     */
+    public function fiveStar(Request $request, OpinionRepository $opinionRepository): Response
+    {
+        $opinion =$opinionRepository->getRatingStars(5);
+
+        return $this->render('opinion/opinionStar.html.twig', [
             'opinion' => $opinion
             ]);
     }

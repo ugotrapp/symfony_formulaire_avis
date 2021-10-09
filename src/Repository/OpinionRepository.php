@@ -35,7 +35,7 @@ class OpinionRepository extends ServiceEntityRepository
     public function findByNote()
     {
         return $this->createQueryBuilder('a')
-            ->orderBy('a.note', 'ASC')
+            ->orderBy('a.note', 'DESC')
             ->getQuery()
             ->getResult()
         ;

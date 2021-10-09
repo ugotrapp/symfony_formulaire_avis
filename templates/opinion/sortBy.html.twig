@@ -1,27 +1,11 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}{% endblock %}
-{% form_theme form 'bootstrap_4_layout.html.twig' %}
+
 
 {% block body %}
 
-{% if is_granted('ROLE_MEMBER') %}
-<h1>Votre avis nous intéresse</h1>
-<div class="formulaire">
-{{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button class="btn btn-success">Poster</button>
-{{ form_end(form) }}
-<div class="opinion">{{ include('opinion/_stats.html.twig') }}</div>
-
-
-</div>
-{% endif %}
-
-<div class='filter'>
-<button type="btn" class="btn btn-info" ><a method="get" href="{{ path('opinion_sort_by_date') }}">Trier par date</a></button>
-<button type="btn" class="btn btn-info" ><a method="get" href="{{ path('opinion_sort_by_note') }}">Trier par note</a></button>
-</div>
+<button type="btn" class="btn btn-info"><a method="get" href="{{ path('opinion_index') }}">retour</a></button>
 
 <div class="container">
 <div class="row">
