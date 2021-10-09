@@ -9,6 +9,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Knp\Component\Pager\PaginatorInterface;
 
 /**
  * @Route("/avis")
@@ -18,7 +19,7 @@ class OpinionController extends AbstractController
     /**
      * @Route("/", name="opinion_index", methods={"GET","POST"})
      */
-    public function index(OpinionRepository $opinionRepository, Request $request): Response
+    public function index(OpinionRepository $opinionRepository, Request $request, PaginatorInterface $paginator): Response
     {
         $opinion = new Opinion();
         $opinion->setDateDeCreation(new \DateTime('now'));
@@ -33,6 +34,13 @@ class OpinionController extends AbstractController
 
             return $this->redirectToRoute('opinion_index', [], Response::HTTP_SEE_OTHER);
         }
+
+        $donnees = $opinionRepository->findAll();
+        $opinion = $paginator->paginate(
+            $donnees,
+            $request->query->getInt('page', 1),
+            6
+        );
         
         $fiveStarsRating = count($opinionRepository->getRatingStars(5));
         $fourStarsRating = count($opinionRepository->getRatingStars(4));
@@ -41,7 +49,7 @@ class OpinionController extends AbstractController
         $oneStarRating = count($opinionRepository->getRatingStars(1));
         
             return $this->render('opinion/index.html.twig', [
-            'opinion' => $opinionRepository->findAll(),
+            'opinion' => $opinion,
             'fiveStarsRating' => $fiveStarsRating,
             'fourStarsRating' => $fourStarsRating,
             'threeStarsRating' => $threeStarsRating,
@@ -54,20 +62,33 @@ class OpinionController extends AbstractController
     /**
      * @Route("/tri_par_date", name="opinion_sort_by_date", methods={"GET","POST"})
      */
-    public function sortByDate(Request $request, OpinionRepository $opinionRepository)
-    {
+    public function sortByDate(Request $request, OpinionRepository $opinionRepository,PaginatorInterface $paginator)
+    {   
+        $donnees = $opinionRepository->findByDate();
+        $opinion = $paginator->paginate(
+            $donnees,
+            $request->query->getInt('page', 1),
+            6
+        );
+
         return $this->render('opinion/sortBy.html.twig', [
-            'opinion' => $opinionRepository->findByDate(),
+            'opinion' => $opinion,
         ]);
     }
 
     /**
      * @Route("/tri_par_note", name="opinion_sort_by_note", methods={"GET","POST"})
      */
-    public function sortByNote(Request $request, OpinionRepository $opinionRepository)
+    public function sortByNote(Request $request, OpinionRepository $opinionRepository ,PaginatorInterface $paginator)
     {
+        $donnees = $opinionRepository->findByDate();
+        $opinion = $paginator->paginate(
+            $donnees,
+            $request->query->getInt('page', 1),
+            6
+        );
         return $this->render('opinion/sortBy.html.twig', [
-            'opinion' => $opinionRepository->findByNote(),
+            'opinion' => $opinion,
         ]);
     }
 

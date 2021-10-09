@@ -39,12 +39,12 @@ class AppFixtures extends Fixture
         $manager->persist($user);
         $manager->flush();
 
-        for ($i = 1; $i < 20; $i++) {
+        for ($i = 1; $i < 100; $i++) {
 
         $opinion = new Opinion();
         $opinion->setNom($this->faker->name());
         $opinion->setEmail($this->faker->email());
-        $opinion->setContenu($this->faker->words(15, true));
+        $opinion->setContenu($this->faker->words(20, true));
         $opinion->setNote($this->faker->numberBetween(1, 5));
         $opinion->setDateDeCreation($this->faker->dateTime());
         $opinion->setActive(1);

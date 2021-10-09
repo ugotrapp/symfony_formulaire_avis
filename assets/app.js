@@ -10,4 +10,4 @@ import './styles/app.css';
 
 // start the Stimulus application
 import './bootstrap';
-import "bootswatch/dist/sandstone/bootstrap.min.css";
+import "bootswatch/dist/sketchy/bootstrap.min.css";
