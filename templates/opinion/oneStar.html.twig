@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{% endblock %}
+
+{% block body %}
+
+<div class="container">
+<div class="row">
+
+{% for opinions in opinion %}
+<div class="col-sm-4">
+<div class="card border-info mb-5" style="max-width: 20rem;">
+  <div class="card-header">{{opinions.nom}}</div>
+        <div class="card-body">
+            {% if opinions.active == 1 %}
+                <p class="card-text">{{opinions.contenu}}</p>
+                {% endif %}
+                {{ include('opinion/_notes.html.twig') }}
+                <p class="card-text">Date de publication : {{opinions.dateDeCreation | date("m/d/Y")}}</p>
+
+                </div>
+</div>
+</div>
+
+    {% endfor %}
+    </div>
+    </div>
+</div>
+{% endblock %}

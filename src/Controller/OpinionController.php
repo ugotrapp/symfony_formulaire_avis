@@ -33,12 +33,35 @@ class OpinionController extends AbstractController
 
             return $this->redirectToRoute('opinion_index', [], Response::HTTP_SEE_OTHER);
         }
-
-
-        return $this->render('opinion/index.html.twig', [
-            'opinion' => $opinionRepository->findByDate(),
+        
+        $fiveStarsRating = count($opinionRepository->getRatingStars(5));
+        $fourStarsRating = count($opinionRepository->getRatingStars(4));
+        $threeStarsRating = count($opinionRepository->getRatingStars(3));
+        $twoStarsRating = count($opinionRepository->getRatingStars(2));
+        $oneStarRating = count($opinionRepository->getRatingStars(1));
+        
+            return $this->render('opinion/index.html.twig', [
+            'opinion' => $opinionRepository->findAll(),
+            'fiveStarsRating' => $fiveStarsRating,
+            'fourStarsRating' => $fourStarsRating,
+            'threeStarsRating' => $threeStarsRating,
+            'twoStarsRating' => $twoStarsRating,
+            'oneStarRating' => $oneStarRating,
             'form' => $form->createView(),
         ]);
+    }
+
+    /**
+     * @Route("/one_star", name="opinion_one_star", methods={"GET","POST"})
+     */
+    public function oneStar(Request $request, OpinionRepository $opinionRepository): Response
+    {
+        // $opinion = new Opinion();
+        $opinion =$opinionRepository->getRatingStars(1);
+
+        return $this->render('opinion/oneStar.html.twig', [
+            'opinion' => $opinion
+            ]);
     }
 
     /**
@@ -139,6 +162,4 @@ class OpinionController extends AbstractController
 
         return $this->redirectToRoute('opinion_index', [], Response::HTTP_SEE_OTHER);
     }
-
-  
 }

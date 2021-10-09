@@ -40,17 +40,38 @@ class OpinionRepository extends ServiceEntityRepository
             ->getResult()
         ;
     }
+
+    /**
+     * @return array
+     */
+    public function getNoteRank(int $value): array
+    {
+        $queryBuilder = $this->createQueryBuilder('o')->select(['o.note']);
+
+        return array_column($queryBuilder->getQuery()->getArrayResult(), 'note');
+    }
+
+    /**
+     * @return array
+     */
+    public function getDate(int $value): array
+    {
+        $queryBuilder = $this->createQueryBuilder('o')->select(['o.dateDeCreation']);
+
+        return array_column($queryBuilder->getQuery()->getArrayResult(), 'dateDeCreation');
+    }
+
     
 
-    /*
-    public function findOneBySomeField($value): ?Avis
+    
+    public function getRatingStars($value)
     {
-        return $this->createQueryBuilder('a')
-            ->andWhere('a.exampleField = :val')
+        return $this->createQueryBuilder('o')
+            ->andWhere('o.note = :val')
             ->setParameter('val', $value)
             ->getQuery()
-            ->getOneOrNullResult()
+            ->getResult()
         ;
     }
-    */
+    
 }
