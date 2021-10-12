@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello GameController!{% endblock %}
+
+{% block body %}
+<div class="container">
+<div class="row">
+{% for game in games %}
+
+<div class="card border-info m-3" style="max-width: 15rem;">
+<h5 class="card-title">{{game.nom}}</h5>
+  <img src="{{ game.image }}" class="card-img-top" alt="...">
+  <div class="card-body">
+    <p class="card-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellat laudantium, expedita nisi molestias libero impedit.</p>
+    <a href="#" class="btn btn-primary">poster un avis</a>
+  </div>
+</div>
+{% endfor %}
+</div>
+</div>
+{% endblock %}
