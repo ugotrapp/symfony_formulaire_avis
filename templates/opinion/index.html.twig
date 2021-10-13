@@ -11,7 +11,7 @@
 {{ form_start(form) }}
     {{ form_widget(form) }}
     <button class="btn btn-success">Poster</button>
-{{ form_end(form) }}
+{{ form_end(form) }} #}
 <div class="opinion">{{ include('opinion/_stats.html.twig') }}</div>
 
 
@@ -21,7 +21,16 @@
 <div class='filter'>
 <button type="btn" class="btn btn-info" ><a method="get" href="{{ path('opinion_sort_by_date') }}">Trier par date</a></button>
 <button type="btn" class="btn btn-info" ><a method="get" href="{{ path('opinion_sort_by_note') }}">Trier par note</a></button>
+
 </div>
+
+{# {% if formFactory is not defined %}
+                {% set formFactory = formFactory.create %}
+              {% endif %}
+              {{ form_start(formFactory) }}
+                {{ form_widget(formFactory) }}
+                <button class="btn btn-outline-success my-2 my-sm-0">Search</button>
+              {{ form_end(formFactory) }} #}
 
 <div class="container">
 <div class="row">
@@ -29,7 +38,10 @@
 {% for opinions in opinion %}
 <div class="col-sm-4">
 <div class="card border-info mb-5" style="max-width: 20rem;">
+{# <div class="card-header">{{opinions.game.nom}}</div> #}
   <div class="card-header">{{opinions.nom}}</div>
+  
+  
         <div class="card-body">
             {% if opinions.active == 1 %}
                 <p class="card-text">{{opinions.contenu}}</p>

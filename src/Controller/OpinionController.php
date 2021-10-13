@@ -176,6 +176,26 @@ class OpinionController extends AbstractController
         ]);
     }
 
+    //     /**
+    //     * @Route("/search", name="app_search", methods={"GET","POST"})
+    //     */
+    //     public function search(Request $request, OpinionRepository $opinionRepository): Response
+    //     {
+        
+    //     $studentSearchForm = $this->createForm(OpinionSearchType::class);
+    //     $studentSearchForm->handleRequest($request);
+
+    //     if ($formFactory->isSubmitted() && $formFactory->isValid()) {
+    //         $keyword = $formFactory->getData()['q'];
+    //         $opinions = $opinionRepository->findByGame($keyword);
+    //     }
+    //         return $this->render('opinion/sortBy.html.twig', [
+    //         'opinion' => $opinion,
+    //         'formFactory' => $formFactory->createView(),
+    //     ]);
+    // }
+    
+
     /**
      * @Route("/{id}", name="opinion_show", methods={"GET"})
      */

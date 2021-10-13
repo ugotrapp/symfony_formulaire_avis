@@ -29,9 +29,25 @@
                         <a class="nav-link" href="{{ path('app_login') }}"><font style="vertical-align: inherit;"><font
                                         style="vertical-align: inherit;">Connexion</font></font></a>
                     {% endif %}
-                    
-               
-                
+
+        <li class="nav-item">
+          <a class="nav-link" href="#">Meilleurs jeux</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Nintendo Switch</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{{ path('game_xbox') }}">XBOX</a>
+
+          <li class="nav-item">
+          <a class="nav-link" href="{{ path('game_ps5') }}">PS5</a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" href="{{ path('opinion_index') }}">Avis</a>
+        </li>
+        </li>
+
       </ul>
       <div class="d-flex">
         {% if is_granted('ROLE_ADMIN') %}<h5>mode administrateur</h5>{% endif %}

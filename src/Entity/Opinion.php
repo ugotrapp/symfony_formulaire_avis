@@ -47,6 +47,12 @@ class Opinion
      */
     private $active;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Game::class, inversedBy="opinion")
+     */
+    private $game;
+
+
     public function getId(): ?int
     {
         return $this->id;
@@ -123,4 +129,18 @@ class Opinion
 
         return $this;
     }
+
+    public function getGame(): ?Game
+    {
+        return $this->game;
+    }
+
+    public function setGame(?Game $game): self
+    {
+        $this->game = $game;
+
+        return $this;
+    }
+
+    
 }

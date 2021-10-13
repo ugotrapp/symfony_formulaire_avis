@@ -73,5 +73,34 @@ class OpinionRepository extends ServiceEntityRepository
             ->getResult()
         ;
     }
+
+    public function findByGame($keyword)
+    {
+        // 'p' sera l'alias qui permet de désigner un profil
+        return $this->createQueryBuilder('o')
+            // Demande de jointure de l'objet user.
+            // 'u' sera l'alias qui permet de désigner un user.
+            ->innerJoin('o.game', 'g')
+            // Ajout d'un filtre qui ne retient que le profil
+            // qui possède une relation avec la variable :user.
+            ->andWhere('g.nom = :keyword')
+            // Ajout d'un filtre qui ne retient que les users
+            // qui contiennent (opérateur LIKE) la chaîne de
+            // caractères contenue dans la variable :role.
+            
+            // Affectation d'une valeur à la variable :user.
+            
+            // Affectation d'une valeur à la variable :role.
+            // Le symbole % est joker qui veut dire
+            // « match toutes les chaînes de caractères ».
+            ->setParameter('keyword', "%{$keyword}%")
+            // Récupération d'une requête qui n'attend qu'à être exécutée.
+            ->getQuery()
+            // Exécution de la requête.
+            // Récupération d'une variable qui peut contenir
+            // un profil ou la valeur nulle.
+            ->getOneOrNullResult()
+        ;
+    }
     
 }

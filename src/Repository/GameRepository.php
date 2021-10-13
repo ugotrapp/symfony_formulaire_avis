@@ -19,32 +19,29 @@ class GameRepository extends ServiceEntityRepository
         parent::__construct($registry, Game::class);
     }
 
-    // /**
-    //  * @return Game[] Returns an array of Game objects
-    //  */
-    /*
-    public function findByExampleField($value)
-    {
-        return $this->createQueryBuilder('g')
-            ->andWhere('g.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('g.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
+    
 
-    /*
-    public function findOneBySomeField($value): ?Game
+    public function findPlateform($value)
     {
-        return $this->createQueryBuilder('g')
-            ->andWhere('g.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
+        $qb = $this->createQueryBuilder('g');
+
+        
+            $qb->andWhere('g.plateform like :plateform');
+            $qb->setParameter('plateform', "%{$value}%");
+    
+            return $qb->getQuery()->getResult();
     }
-    */
+
+    public function test($id)
+    {
+        $qb = $this->createQueryBuilder('g');
+        $qb->innerJoin('g.opinion', 'o');
+        $qb->andWhere('o.id = :id');
+        $qb->setParameter('id',"{$id}" );
+
+        // dd($qb->getQuery());
+            return $qb->getQuery()->getResult();
+    }
+
+   
 }

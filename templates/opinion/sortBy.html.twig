@@ -13,6 +13,7 @@
 {% for opinions in opinion %}
 <div class="col-sm-4">
 <div class="card border-info mb-5" style="max-width: 20rem;">
+<div class="card-header">{{opinions.game.nom}}</div>
   <div class="card-header">{{opinions.nom}}</div>
         <div class="card-body">
             {% if opinions.active == 1 %}
