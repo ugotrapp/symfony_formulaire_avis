@@ -11,7 +11,8 @@
 
 <div class="card border-info m-1" style="max-width: 15rem;">
 <h5 class="card-title">{{game.nom}}</h5>
-  <img src="{{ game.image }}" class="card-img-top" alt="...">
+
+  <a href="{{ path('game_show', {'id': game.id}) }}"><img src="{{ game.image }}" class="card-img-top" alt="..."></a>
   <div class="card-body">
     
     <p class="badge rounded-pill bg-success">{{game.plateforme[0]}} </p>

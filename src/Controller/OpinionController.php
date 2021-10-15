@@ -35,12 +35,13 @@ class OpinionController extends AbstractController
             return $this->redirectToRoute('opinion_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        $donnees = $opinionRepository->findAll();
-        $opinion = $paginator->paginate(
-            $donnees,
-            $request->query->getInt('page', 1),
-            6
-        );
+        $opinion = $opinionRepository->findAll();
+        // $opinion = $paginator->paginate(
+        //     $donnees,
+        //     $request->query->getInt('page', 1),
+        //     6
+        // );
+
         
         $fiveStarsRating = count($opinionRepository->getRatingStars(5));
         $fourStarsRating = count($opinionRepository->getRatingStars(4));
@@ -64,12 +65,12 @@ class OpinionController extends AbstractController
      */
     public function sortByDate(Request $request, OpinionRepository $opinionRepository,PaginatorInterface $paginator)
     {   
-        $donnees = $opinionRepository->findByDate();
-        $opinion = $paginator->paginate(
-            $donnees,
-            $request->query->getInt('page', 1),
-            6
-        );
+        $opinion = $opinionRepository->findByDate();
+        // $opinion = $paginator->paginate(
+        //     $donnees,
+        //     $request->query->getInt('page', 1),
+        //     6
+        // );
 
         return $this->render('opinion/sortBy.html.twig', [
             'opinion' => $opinion,
@@ -81,78 +82,34 @@ class OpinionController extends AbstractController
      */
     public function sortByNote(Request $request, OpinionRepository $opinionRepository ,PaginatorInterface $paginator)
     {
-        $donnees = $opinionRepository->findByDate();
-        $opinion = $paginator->paginate(
-            $donnees,
-            $request->query->getInt('page', 1),
-            6
-        );
+        $opinion = $opinionRepository->findByNote();
+        // $opinion = $paginator->paginate(
+        //     $donnees,
+        //     $request->query->getInt('page', 1),
+        //     6
+        // );
         return $this->render('opinion/sortBy.html.twig', [
             'opinion' => $opinion,
         ]);
     }
 
     /**
-     * @Route("/notes_une_etoile", name="opinion_one_star", methods={"GET","POST"})
+     * @Route("/{note}/star", name="opinion_star", methods={"GET","POST"})
      */
-    public function oneStar(Request $request, OpinionRepository $opinionRepository): Response
+    public function star(Request $request, OpinionRepository $opinionRepository, int $note): Response
     {
         
-        $opinion =$opinionRepository->getRatingStars(1);
-
+        $opinion =$opinionRepository->getRatingStars($note);
+        // $opinion = $paginator->paginate(
+        //     $donnees,
+        //     $request->query->getInt('page', 1),
+        //     6
+        // );
         return $this->render('opinion/opinionStar.html.twig', [
             'opinion' => $opinion
             ]);
     }
-
-    /**
-     * @Route("/notes_deux_etoiles", name="opinion_two_star", methods={"GET","POST"})
-     */
-    public function twoStar(Request $request, OpinionRepository $opinionRepository): Response
-    {
-        $opinion =$opinionRepository->getRatingStars(2);
-
-        return $this->render('opinion/opinionStar.html.twig', [
-            'opinion' => $opinion
-            ]);
-    }
-
-    /**
-     * @Route("/notes_trois_etoiles", name="opinion_three_star", methods={"GET","POST"})
-     */
-    public function threeStar(Request $request, OpinionRepository $opinionRepository): Response
-    {
-        $opinion =$opinionRepository->getRatingStars(3);
-
-        return $this->render('opinion/opinionStar.html.twig', [
-            'opinion' => $opinion
-            ]);
-    }
-
-    /**
-     * @Route("/notes_quatre_etoiles", name="opinion_four_star", methods={"GET","POST"})
-     */
-    public function fourStar(Request $request, OpinionRepository $opinionRepository): Response
-    {
-        $opinion =$opinionRepository->getRatingStars(4);
-
-        return $this->render('opinion/opinionStar.html.twig', [
-            'opinion' => $opinion
-            ]);
-    }
-
-    /**
-     * @Route("/notes_cinq_etoiles", name="opinion_five_star", methods={"GET","POST"})
-     */
-    public function fiveStar(Request $request, OpinionRepository $opinionRepository): Response
-    {
-        $opinion =$opinionRepository->getRatingStars(5);
-
-        return $this->render('opinion/opinionStar.html.twig', [
-            'opinion' => $opinion
-            ]);
-    }
-
+    
     /**
      * @Route("/new", name="opinion_new", methods={"GET","POST"})
      */

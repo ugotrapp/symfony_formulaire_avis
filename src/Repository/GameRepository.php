@@ -36,12 +36,16 @@ class GameRepository extends ServiceEntityRepository
     {
         $qb = $this->createQueryBuilder('g');
         $qb->innerJoin('g.opinion', 'o');
-        $qb->andWhere('o.id = :id');
-        $qb->setParameter('id',"{$id}" );
+        $qb->andWhere('o.id = :game_id');
+        $qb->setParameter('game_id',"{$id}" );
 
-        // dd($qb->getQuery());
+            
             return $qb->getQuery()->getResult();
     }
+
+    
+
+
 
    
 }
